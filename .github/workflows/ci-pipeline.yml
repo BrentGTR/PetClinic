@@ -1,0 +1,29 @@
+name: docker-compose-actions-workflow
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Build and Start Docker Compose Services
+        run: |
+          docker-compose up -d
+          docker-compose ps
+          # Wait for the container to be ready
+          until docker-compose ps --services --filter "status=running" | grep -q 'spring-petclinic'; do
+            sleep 1
+          done
+
+      - name: Run API Tests
+        run: mvn clean test -Dsurefire.suiteXmlFiles=src/testNgSuites/api_tests.xml
+
+      - name: Run Web Tests
+        run: mvn clean test -Dsurefire.suiteXmlFiles=src/testNgSuites/web_tests.xml
+
+      - name: Test Docker Compose Services
+        run: docker run --network container:spring-petclinic appropriate/curl -s --retry 10 --retry-connrefused http://localhost:8080/
+
+      - name: Stop and Remove Docker Compose Services
+        run: docker-compose down

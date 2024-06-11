@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Parallel Web Test Suite" thread-count="2" parallel="methods" >
+    <test name="PetClinic Owner Web Tests">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.petClinic.web.tests.ViewOwnerDetailsTest"/>
+            <class name="com.petClinic.web.tests.EditOwnerDetailsTest"/>
+        </classes>
+    </test>
+</suite>

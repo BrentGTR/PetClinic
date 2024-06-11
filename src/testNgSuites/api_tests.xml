@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Parallel API Test Suite" thread-count="3" parallel="methods" >
+    <test name="PetClinic API Tests">
+        <classes>
+            <class name="com.petClinic.api.tests.OwnersEndpointAPITest"/>
+            <class name="com.petClinic.api.tests.PetEndpointAPITest"/>
+        </classes>
+    </test>
+</suite>
