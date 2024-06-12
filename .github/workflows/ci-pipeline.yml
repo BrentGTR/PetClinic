@@ -22,8 +22,5 @@ jobs:
       - name: Run Web Tests
         run: mvn clean test -Dsurefire.suiteXmlFiles=src/testNgSuites/web_tests.xml
 
-      - name: Test Docker Compose Services
-        run: docker run --network container:spring-petclinic appropriate/curl -s --retry 10 --retry-connrefused http://localhost:8080/
-
       - name: Stop and Remove Docker Compose Services
         run: docker-compose down

@@ -123,5 +123,9 @@ services:
       - petclinic_net
 
 networks:
+<<<<<<< feat/selenium_grid
   petclinic_net:
+=======
+  petclinic_net:  # Define the custom network
+>>>>>>> main
     driver: bridge

@@ -44,13 +44,13 @@ Ensure you have the following prerequisites installed on your system:
 1. Clone this repository to your local machine:
 
    ```bash
-   git clone https://github.com/BackbaseRecruitment/brentsingh.git
+   git clone https://github.com/BrentGTR/PetClinic.git
    ```
 
 2. Navigate to the project directory:
 
    ```bash
-   cd brentsingh
+   cd PetClinic
    ```
 
 3. Run the PetClinic application using Docker:
