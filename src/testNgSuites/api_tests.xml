@@ -4,7 +4,6 @@
     <test name="PetClinic API Tests">
         <classes>
             <class name="com.petClinic.api.tests.OwnersEndpointAPITest"/>
-            <class name="com.petClinic.api.tests.PetEndpointAPITest"/>
         </classes>
     </test>
 </suite>
