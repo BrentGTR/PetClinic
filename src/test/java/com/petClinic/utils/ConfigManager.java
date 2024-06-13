@@ -18,6 +18,11 @@ public class ConfigManager {
             properties.load(fileInputStream);
             logger.info("Configuration properties loaded.");
             fileInputStream.close();
+
+            // Set the baseUrl dynamically based on useSeleniumGrid property
+            boolean useSeleniumGrid = Boolean.parseBoolean(properties.getProperty("useSeleniumGrid"));
+            String baseUrl = useSeleniumGrid ? "http://spring-petclinic:8080" : "http://localhost:8080";
+            properties.setProperty("baseUrl", baseUrl);
         } catch (IOException ex) {
             logger.error("IOException: ", ex);
         }

@@ -21,7 +21,7 @@ public class OwnersEndpointAPITest extends BaseApiTest {
 
     @BeforeSuite
     public static void setUp() {
-        RestAssured.baseURI = ConfigManager.getProperty("baseUrl");
+        RestAssured.baseURI = ConfigManager.getProperty("api.url");
     }
 
     @Test

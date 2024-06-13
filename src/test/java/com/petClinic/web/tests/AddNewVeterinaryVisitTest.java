@@ -37,7 +37,7 @@ public class AddNewVeterinaryVisitTest extends BaseTest {
 
         // Act
         VisitsPage visitsPage = ownersInformationPage.clickAddVisitButton();
-        visitsPage.setDate("30-06-2024");
+        visitsPage.setDate("09-08-2024");
         visitsPage.setDescription("Regular check-up");
         visitsPage.addNewVisit();
 
