@@ -12,6 +12,7 @@ import java.net.URL;
 public class DockerUtils {
     private static final Logger logger = LogManager.getLogger(DockerUtils.class);
     private static final int MAX_WAIT_TIME = 120; // Maximum wait time in seconds
+    private static boolean manageDocker;
 
     public static void runCommand(String command) {
         ProcessBuilder processBuilder = new ProcessBuilder();
@@ -74,6 +75,27 @@ public class DockerUtils {
         if (!isReady) {
             logger.error("Container was not ready within the maximum wait time of {} seconds", MAX_WAIT_TIME);
             throw new RuntimeException("Container not ready within the maximum wait time.");
+        }
+    }
+
+    public void setUpDocker() {
+        logger.info("Setting up the test suite...");
+        manageDocker = Boolean.parseBoolean(ConfigManager.getProperty("manageDocker"));
+
+        if (manageDocker) {
+            DockerUtils.runCommand("docker-compose up -d");
+            logger.info("Starting docker...");
+            DockerUtils.waitForContainerToBeReady(ConfigManager.getProperty("healthCheckUrl"));
+        } else {
+            logger.info("Skipping docker setup.");
+        }
+    }
+
+    public void tearDownDocker() {
+        manageDocker = Boolean.parseBoolean(ConfigManager.getProperty("manageDocker"));
+        if (manageDocker) {
+            DockerUtils.runCommand("docker-compose down");
+            logger.info("... Stopped docker...");
         }
     }
 }

@@ -25,13 +25,11 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
 
-public class BaseTest {
+public class BaseTest extends DockerUtils {
 
     protected WebDriver driver;
     protected static ExtentReports extent;
     protected static final Logger logger = LogManager.getLogger(BaseTest.class);
-    private static boolean manageDocker;
-    private static final String HEALTH_CHECK_URL = "http://localhost:8080/#!/owners";
 
     static {
         // Initialize ExtentReports in a static block
@@ -52,16 +50,7 @@ public class BaseTest {
 
     @BeforeSuite
     public void setUpSuite() {
-        logger.info("Setting up the test suite...");
-        manageDocker = Boolean.parseBoolean(ConfigManager.getProperty("manageDocker"));
-
-        if (manageDocker) {
-            DockerUtils.runCommand("docker-compose up -d");
-            logger.info("Starting docker...");
-            DockerUtils.waitForContainerToBeReady(HEALTH_CHECK_URL);
-        } else {
-            logger.info("Skipping docker setup.");
-        }
+        setUpDocker();
     }
 
     @BeforeMethod
@@ -127,10 +116,7 @@ public class BaseTest {
     @AfterSuite
     public void tearDownSuite() {
         logger.info("Tearing down the test suite...");
-        if (manageDocker) {
-            DockerUtils.runCommand("docker-compose down");
-            logger.info("... Stopped docker.");
-        }
+        tearDownDocker();
         extent.flush();
     }
 }
