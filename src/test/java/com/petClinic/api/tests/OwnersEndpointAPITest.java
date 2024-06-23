@@ -39,6 +39,7 @@ public class OwnersEndpointAPITest extends BaseApiTest {
         // ASSERT
         assertResponse(response, 201);
 
+
         // Cleanup
         String locationHeader = response.getHeader("Location");
         if (locationHeader != null) {

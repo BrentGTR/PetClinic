@@ -18,7 +18,6 @@ import java.net.URL;
 
 public class BrowserFactory {
 
-    private static final String HEALTH_CHECK_URL = "http://localhost:4444/status";
     private static final Logger logger = LogManager.getLogger(BrowserFactory.class);
 
     public static WebDriver getDriver(String browserType, boolean isHeadless) {
@@ -26,7 +25,7 @@ public class BrowserFactory {
         boolean useSeleniumGrid = ConfigManager.getBooleanProperty("useSeleniumGrid");
 
         if (useSeleniumGrid) {
-            DockerUtils.waitForContainerToBeReady(HEALTH_CHECK_URL);
+            DockerUtils.waitForContainerToBeReady(ConfigManager.getProperty("healthCheckUrl"));
             logger.info("Using Selenium Grid for browser: {}", browserType);
             try {
                 DesiredCapabilities capabilities = new DesiredCapabilities();
