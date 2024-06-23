@@ -1,7 +1,7 @@
 package com.petClinic.web.utils;
 
-import com.petClinic.utils.ConfigManager;
-import com.petClinic.utils.DockerUtils;
+import com.petClinic.commonUtils.ConfigManager;
+import com.petClinic.commonUtils.DockerUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;

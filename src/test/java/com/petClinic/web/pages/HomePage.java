@@ -2,7 +2,7 @@
 package com.petClinic.web.pages;
 
 import com.petClinic.web.pages.owners.OwnersPage;
-import com.petClinic.utils.ConfigManager;
+import com.petClinic.commonUtils.ConfigManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

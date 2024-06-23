@@ -1,4 +1,4 @@
-package com.petClinic.utils;
+package com.petClinic.commonUtils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -5,8 +5,8 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
-import com.petClinic.utils.ConfigManager;
-import com.petClinic.utils.DockerUtils;
+import com.petClinic.commonUtils.ConfigManager;
+import com.petClinic.commonUtils.DockerUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.ITestResult;
@@ -21,7 +21,6 @@ public class BaseApiTest extends DockerUtils {
     protected static ExtentReports extent;
     protected static final Logger logger = LogManager.getLogger(BaseApiTest.class);
     protected ExtentTest test;
-    private static boolean manageDocker;
 
     static {
         ExtentSparkReporter sparkReporter = new ExtentSparkReporter("test-output/extent-reports/extent-report.html");
@@ -38,15 +37,7 @@ public class BaseApiTest extends DockerUtils {
 
     @BeforeSuite
     public void setUpSuite() {
-        manageDocker = Boolean.parseBoolean(ConfigManager.getProperty("manageDocker"));
-
-        if (manageDocker) {
-            runCommand("docker-compose up -d");
-            logger.info("Starting docker...");
-            waitForContainerToBeReady(ConfigManager.getProperty("healthCheckUrl"));
-        } else {
-            logger.info("Skipping docker setup.");
-        }
+        setUpDocker();
     }
 
     @AfterSuite
