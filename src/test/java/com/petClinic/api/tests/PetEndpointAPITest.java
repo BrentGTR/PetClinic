@@ -27,19 +27,11 @@ public class PetEndpointAPITest extends BaseApiTest {
     @Test
     public void testAddNewPet() {
         // ARRANGE
-        // Create a new owner first
-        Owner owner = FakeDataGenerator.generateOwner();
-        Response ownerResponse = given()
-                .contentType(ContentType.JSON)
-                .body(owner)
-                .when()
-                .post("/owners");
-        assertResponse(ownerResponse, 201);
-
-        // Use the owner ID directly from the generated owner object
+        Owner owner = getOwner();
         int ownerId = owner.getId();
 
         Pet pet = FakeDataGenerator.generatePet();
+
         logger.info("Generated pet data: {}", pet);
 
         // ACT
@@ -52,6 +44,35 @@ public class PetEndpointAPITest extends BaseApiTest {
         // ASSERT
         assertResponse(response, 204);
     }
+
+    @Test
+    public void testAddNewPetInvalidInput() {
+        // ARRANGE
+        Owner owner = getOwner();
+        int ownerId = owner.getId();
+
+        // ACT
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .body("")
+                .when()
+                .post("/owners/{ownerId}/pets", ownerId);
+
+        // ASSERT
+        assertResponse(response, 400);
+    }
+
+    private static Owner getOwner() {
+        Owner owner = FakeDataGenerator.generateOwner();
+        Response ownerResponse = given()
+                .contentType(ContentType.JSON)
+                .body(owner)
+                .when()
+                .post("/owners");
+        assertResponse(ownerResponse, 201);
+        return owner;
+    }
+
 
     private static void assertResponse(Response response, int statusCode) {
         response.then().statusCode(statusCode);
