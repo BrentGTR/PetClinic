@@ -53,7 +53,7 @@ public class BrowserFactory {
                     default:
                         throw new IllegalArgumentException("Browser type not supported: " + browserType);
                 }
-                driver = new RemoteWebDriver(new URL("http://localhost:4444"), capabilities);
+                driver = new RemoteWebDriver(new URL(ConfigManager.getProperty("seleniumGridUrl")), capabilities);
             } catch (MalformedURLException e) {
                 logger.error("Failed to create driver", e);
             }
