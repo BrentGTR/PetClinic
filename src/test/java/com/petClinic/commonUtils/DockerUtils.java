@@ -78,7 +78,7 @@ public class DockerUtils {
         }
     }
 
-    public void setUpDocker() {
+    public static void setUpDocker() {
         logger.info("Setting up the test suite...");
         manageDocker = Boolean.parseBoolean(ConfigManager.getProperty("manageDocker"));
 
@@ -91,7 +91,7 @@ public class DockerUtils {
         }
     }
 
-    public void tearDownDocker() {
+    public static void tearDownDocker() {
         manageDocker = Boolean.parseBoolean(ConfigManager.getProperty("manageDocker"));
         if (manageDocker) {
             DockerUtils.runCommand("docker-compose down");

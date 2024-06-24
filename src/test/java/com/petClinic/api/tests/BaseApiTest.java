@@ -16,7 +16,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import java.lang.reflect.Method;
 
-public class BaseApiTest extends DockerUtils {
+public class BaseApiTest {
 
     protected static ExtentReports extent;
     protected static final Logger logger = LogManager.getLogger(BaseApiTest.class);
@@ -37,13 +37,13 @@ public class BaseApiTest extends DockerUtils {
 
     @BeforeSuite
     public void setUpSuite() {
-        setUpDocker();
+        DockerUtils.setUpDocker();
     }
 
     @AfterSuite
     public void tearDownSuite() {
         logger.info("Tearing down the test suite...");
-        tearDownDocker();
+        DockerUtils.tearDownDocker();
     }
 
     @BeforeMethod

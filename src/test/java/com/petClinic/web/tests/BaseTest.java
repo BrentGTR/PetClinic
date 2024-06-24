@@ -25,7 +25,7 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
 
-public class BaseTest extends DockerUtils {
+public class BaseTest {
 
     protected WebDriver driver;
     protected static ExtentReports extent;
@@ -50,7 +50,7 @@ public class BaseTest extends DockerUtils {
 
     @BeforeSuite
     public void setUpSuite() {
-        setUpDocker();
+        DockerUtils.setUpDocker();
     }
 
     @BeforeMethod
@@ -116,7 +116,7 @@ public class BaseTest extends DockerUtils {
     @AfterSuite
     public void tearDownSuite() {
         logger.info("Tearing down the test suite...");
-        tearDownDocker();
+        DockerUtils.tearDownDocker();
         extent.flush();
     }
 }
