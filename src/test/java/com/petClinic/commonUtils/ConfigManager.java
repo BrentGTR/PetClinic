@@ -1,4 +1,4 @@
-package com.petClinic.utils;
+package com.petClinic.commonUtils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,7 +21,7 @@ public class ConfigManager {
 
             // Set the baseUrl dynamically based on useSeleniumGrid property
             boolean useSeleniumGrid = Boolean.parseBoolean(properties.getProperty("useSeleniumGrid"));
-            String baseUrl = useSeleniumGrid ? "http://spring-petclinic:8080" : "http://localhost:8080";
+            String baseUrl = useSeleniumGrid ? ConfigManager.getProperty("baseUrl") : ConfigManager.getProperty("api.url");
             properties.setProperty("baseUrl", baseUrl);
         } catch (IOException ex) {
             logger.error("IOException: ", ex);

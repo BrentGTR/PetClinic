@@ -1,7 +1,7 @@
 package com.petClinic.web.utils;
 
-import com.petClinic.utils.ConfigManager;
-import com.petClinic.utils.DockerUtils;
+import com.petClinic.commonUtils.ConfigManager;
+import com.petClinic.commonUtils.DockerUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -18,7 +18,6 @@ import java.net.URL;
 
 public class BrowserFactory {
 
-    private static final String HEALTH_CHECK_URL = "http://localhost:4444/status";
     private static final Logger logger = LogManager.getLogger(BrowserFactory.class);
 
     public static WebDriver getDriver(String browserType, boolean isHeadless) {
@@ -26,7 +25,7 @@ public class BrowserFactory {
         boolean useSeleniumGrid = ConfigManager.getBooleanProperty("useSeleniumGrid");
 
         if (useSeleniumGrid) {
-            DockerUtils.waitForContainerToBeReady(HEALTH_CHECK_URL);
+            DockerUtils.waitForContainerToBeReady(ConfigManager.getProperty("healthCheckUrl"));
             logger.info("Using Selenium Grid for browser: {}", browserType);
             try {
                 DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -54,7 +53,7 @@ public class BrowserFactory {
                     default:
                         throw new IllegalArgumentException("Browser type not supported: " + browserType);
                 }
-                driver = new RemoteWebDriver(new URL("http://localhost:4444"), capabilities);
+                driver = new RemoteWebDriver(new URL(ConfigManager.getProperty("seleniumGridUrl")), capabilities);
             } catch (MalformedURLException e) {
                 logger.error("Failed to create driver", e);
             }

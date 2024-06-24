@@ -1,9 +1,8 @@
 package com.petClinic.api.tests;
 
 import com.petClinic.api.models.Owner;
-import com.petClinic.api.utils.JsonSchemaReader;
 import com.petClinic.api.utils.SchemaValidator;
-import com.petClinic.utils.ConfigManager;
+import com.petClinic.commonUtils.ConfigManager;
 import com.petClinic.api.utils.FakeDataGenerator;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -38,6 +37,7 @@ public class OwnersEndpointAPITest extends BaseApiTest {
 
         // ASSERT
         assertResponse(response, 201);
+
 
         // Cleanup
         String locationHeader = response.getHeader("Location");

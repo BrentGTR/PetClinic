@@ -6,9 +6,9 @@ import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
-import com.petClinic.utils.DockerUtils;
+import com.petClinic.commonUtils.DockerUtils;
 import com.petClinic.web.utils.BrowserFactory;
-import com.petClinic.utils.ConfigManager;
+import com.petClinic.commonUtils.ConfigManager;
 import com.petClinic.web.utils.ClearScreenshotsFolder;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
@@ -30,8 +30,6 @@ public class BaseTest {
     protected WebDriver driver;
     protected static ExtentReports extent;
     protected static final Logger logger = LogManager.getLogger(BaseTest.class);
-    private static boolean manageDocker;
-    private static final String HEALTH_CHECK_URL = "http://localhost:8080/#!/owners";
 
     static {
         // Initialize ExtentReports in a static block
@@ -52,16 +50,7 @@ public class BaseTest {
 
     @BeforeSuite
     public void setUpSuite() {
-        logger.info("Setting up the test suite...");
-        manageDocker = Boolean.parseBoolean(ConfigManager.getProperty("manageDocker"));
-
-        if (manageDocker) {
-            DockerUtils.runCommand("docker-compose up -d");
-            logger.info("Starting docker...");
-            DockerUtils.waitForContainerToBeReady(HEALTH_CHECK_URL);
-        } else {
-            logger.info("Skipping docker setup.");
-        }
+        DockerUtils.setUpDocker();
     }
 
     @BeforeMethod
@@ -127,10 +116,7 @@ public class BaseTest {
     @AfterSuite
     public void tearDownSuite() {
         logger.info("Tearing down the test suite...");
-        if (manageDocker) {
-            DockerUtils.runCommand("docker-compose down");
-            logger.info("... Stopped docker.");
-        }
+        DockerUtils.tearDownDocker();
         extent.flush();
     }
 }
